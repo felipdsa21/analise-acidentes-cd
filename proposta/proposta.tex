@@ -1,0 +1,70 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{lmodern}
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+
+\setlist{itemsep=1pt,topsep=3pt}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+
+\title{\vspace{-1.5cm}Proposta de Projeto Final\\[2pt]
+  \large Gravidade dos acidentes nas rodovias federais brasileiras}
+\author{\normalsize Felipe da Silva Araújo, Fernando Gabriel Feitosa Leite e Karllisson Henrique da Silva\\[2pt]
+  \normalsize Ciência de Dados -- Instituto de Computação, Universidade Federal de Alagoas}
+\date{\vspace{-0.6cm}}
+
+\begin{document}
+\maketitle
+
+\section*{Base de dados}
+
+A base escolhida reúne os acidentes de trânsito registrados pela Polícia Rodoviária Federal (PRF) nas rodovias federais. Ela vem dos Dados Abertos da PRF, conjunto ``Acidentes -- agrupados por ocorrência'', publicado em arquivos CSV anuais com dicionário de dados: \url{https://www.gov.br/prf/pt-br/acesso-a-informacao/dados-abertos/dados-abertos-da-prf}.
+
+Cada registro corresponde a uma ocorrência e traz as seguintes informações:
+\begin{itemize}
+  \item \textbf{tempo:} data, dia da semana, horário e fase do dia;
+  \item \textbf{local:} UF, município, BR, km, coordenadas e unidade da PRF;
+  \item \textbf{via e contexto:} tipo de pista, traçado, uso do solo, sentido, condição meteorológica, causa e tipo do acidente;
+  \item \textbf{envolvidos:} pessoas e veículos, com o número de mortos, feridos, ilesos e ignorados.
+\end{itemize}
+A variável de resultado é a classificação do acidente: sem vítimas, com vítimas feridas ou com vítimas fatais. De 2017 a 2025, são 632.713 ocorrências e 30 colunas.
+
+O período analisado vai de 2017, quando a PRF adotou o sistema de registro atual, a 2025, último ano completo. Como o registro de acidentes sem vítimas mudou ao longo desse período, a análise da gravidade considera apenas os acidentes com vítimas. Os dados cobrem todo o país, e as rodovias de Alagoas serão destacadas para comparar o cenário local com o nacional.
+
+\section*{Justificativa}
+
+Os acidentes nas rodovias federais matam milhares de pessoas todos os anos. Como a PRF registra as condições de cada acidente e o seu desfecho, é possível estudar por que alguns acidentes matam e outros não. Saber quais fatores e locais estão associados aos acidentes fatais ajuda a direcionar a fiscalização e a prevenção. A base também atende aos critérios do projeto: tem centenas de milhares de linhas e mais de 10 colunas úteis, mistura variáveis numéricas e categóricas, tem uma variável de resultado clara, permite análises espaciais e temporais e exige preparação antes da modelagem.
+
+\section*{Problema}
+
+Nem todo acidente tem as mesmas consequências: uma colisão pode deixar apenas feridos em um trecho e mortos em outro. Queremos entender o que diferencia esses casos. Quais fatores de tempo, via, clima e dinâmica do acidente estão associados a acidentes com vítimas fatais? Em que trechos, dias e horários esses acidentes se concentram, no país e em Alagoas?
+
+\section*{Decisão que se pretende apoiar}
+
+A decisão simulada é a de priorizar a fiscalização e as ações preventivas da PRF, como operações, controle de velocidade, campanhas e pedidos de melhoria de sinalização, nos trechos, dias e horários com mais acidentes fatais. Cada hipótese confirmada indica onde concentrar essas ações ou onde elas não são prioritárias. Por exemplo, se os acidentes noturnos em pista simples se mostrarem mais letais, uma recomendação possível seria reforçar a fiscalização e a sinalização desses trechos à noite. O efeito dessas ações poderia ser acompanhado pela proporção de acidentes fatais nos trechos priorizados, comparada à de trechos semelhantes.
+
+\section*{Hipóteses iniciais}
+
+\begin{enumerate}[label=\textbf{H\arabic*.}]
+  \item Em plena noite, a proporção de acidentes fatais é maior do que em pleno dia.
+  \item Em pista simples, a proporção de acidentes fatais é maior do que em pistas duplas ou múltiplas.
+  \item Colisões frontais e atropelamentos de pedestres concentram uma parcela desproporcional dos acidentes fatais.
+  \item Em fins de semana e feriados, a proporção de acidentes fatais é maior do que em dias úteis.
+  \item A proporção de acidentes fatais sob chuva não é maior do que com céu claro ou sol.
+\end{enumerate}
+
+\section*{Preparação dos dados}
+
+Uma primeira inspeção mostrou que os arquivos exigem preparação. Algumas categorias mudam ao longo dos anos, alguns campos têm mais de um valor na mesma célula e há contagens de vítimas que não batem com o total de envolvidos. Também aparecem coordenadas inválidas, valores ausentes ou marcados como ignorados e registros duplicados. Vamos criar ainda variáveis como fim de semana, feriado (a partir de um calendário de feriados nacionais) e faixa horária. Como a classificação é definida pelas contagens de mortos e feridos, essas contagens, assim como as de ilesos e ignorados, não serão usadas como preditoras.
+
+\section*{Possíveis métodos}
+
+Pretendemos verificar as hipóteses com análise exploratória e testes de hipótese. Para estimar a chance de um acidente com vítimas ser fatal, vamos comparar modelos de classificação, dos mais simples e interpretáveis aos mais complexos, considerando o desbalanceamento entre as classes e uma validação que respeite a ordem temporal dos dados. Técnicas de interpretação devem indicar quais fatores mais pesam nas previsões, e análises espaciais e temporais devem mostrar onde e quando os acidentes fatais se concentram.
+
+\end{document}
