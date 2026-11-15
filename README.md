@@ -10,3 +10,9 @@ Equipe: Felipe da Silva Araújo, Fernando Gabriel Feitosa Leite e Karllisson Hen
 - `proposta/`: proposta da Parte 1.
 - `modelo/`: modelo de artigos da SBC, mantido como referência.
 - `docs/`: especificação do projeto e slides da aula sobre ele.
+
+## Ambiente
+
+Com o [uv](https://docs.astral.sh/uv/) instalado, `uv sync` cria o ambiente com Python 3.13 e as mesmas versões de pacotes do Google Colab.
+
+Os documentos LaTeX compilam com `latexmk -pdf` dentro da pasta de cada um.
