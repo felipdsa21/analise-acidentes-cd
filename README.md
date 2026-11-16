@@ -10,6 +10,7 @@ Equipe: Felipe da Silva Araújo, Fernando Gabriel Feitosa Leite e Karllisson Hen
 - `analise.ipynb`: análise completa, da carga dos dados aos modelos e à priorização de trechos.
 - `figuras/`: figuras geradas pelo notebook e usadas no artigo; `figuras/slides/` tem as versões para a apresentação.
 - `artigo/`: artigo final no modelo da SBC.
+- `apresentacao.pdf`: slides da apresentação.
 - `proposta/`: proposta da Parte 1.
 - `modelo/`: modelo de artigos da SBC, mantido como referência.
 - `docs/`: especificação do projeto e slides da aula sobre ele.
